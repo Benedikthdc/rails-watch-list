@@ -6,15 +6,18 @@
 <h1><%= @list.name %></h1>
 </div>
 
+
+
 <div style="text-align: center; margin: 30px"><%= link_to "add movie",  new_list_bookmark_path(@list), class:"btn btn-primary" %></div>
-<div class="cards d-flex ml-3">
+
+<div class="movies-show cards d-flex ml-3">
 <% @list.bookmarks.each do |bookmark|%>
-<div class="card" style="width: 16rem; margin-left: 30px">
+<div class="card" data-aos="fade-in" style="width: 16rem; margin-left: 30px">
   <img src="<%= bookmark.movie.poster_url %>" class="card-img-top" alt="...">
   <div class="card-body">
   <div class="d-flex justify-content-between">
     <h5 class="card-title font-weight-bold"><%= bookmark.movie.title %></h5>
-    <p class="d-flex"><i class="fa-solid fa-star" style="color: blue"></i></i><%= bookmark.movie.rating %></p>
+    <p class="d-flex"><i class="fa-solid fa-star text-warning"></i></i><%= bookmark.movie.rating %></p>
     </div>
       <p style="opacity: 0.6"><%= bookmark.movie.overview %></p>
     <div class="d-flex">
@@ -28,4 +31,29 @@
   </div>
 </div>
 <% end %>
+</div>
+
+<hr style="width:90%; margin: 50px auto;">
+
+<div class="container d-flex justify-content-between mt-4">
+<div class="review-card">
+<h2>Reviews</h2>
+<% @list.reviews.each do |review| %>
+<% review.rating.times do %>
+<i class="fa-solid fa-star text-warning"></i>
+<% end %>
+<p><%= review.created_at %></p>
+<p><%= review.content %></p>
+<hr>
+<% end %>
+</div>
+
+<div class="form-card" style="max-height: 320px">
+<h2>add your review</h2>
+<%= simple_form_for [ @list, @review] do |f|%>
+<%= f.input :content, label: "comment"%>
+<%= f.input :rating, collection: (1..5).to_a, label: "Rating" %>
+<%= f.submit "create review", class: "btn btn-primary"%>
+<% end %>
+</div>
 </div>

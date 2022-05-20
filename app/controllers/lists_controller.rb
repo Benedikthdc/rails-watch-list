@@ -9,13 +9,14 @@ class ListsController < ApplicationController
   end
 
   def show
+    @review = Review.new
     @list = List.find(params[:id])
   end
 
   def destroy
     @list = List.find(params[:id])
     @list.destroy
-    redirect_to lists_path
+    redirect_to root_path
   end
 
   def create
@@ -23,7 +24,7 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list)
     else
-      render :new
+      render
     end
   end
 
