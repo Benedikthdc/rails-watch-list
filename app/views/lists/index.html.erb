@@ -1,0 +1,26 @@
+<div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://images.unsplash.com/photo-1536440136628-849c177e76a1?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1450);">
+  Create your own  Movie List
+</div>
+
+
+
+
+
+
+
+<h2 style="text-align: center; margin: 20px;">My lists</h2>
+<div class="cards d-flex" style="overflow-x: scroll">
+<% @lists.each do |list|  %>
+<div class="list-card m-3" style='background-image: url("<%=list.picture_url%>"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))'>
+<h2><%= link_to list.name, list_path(list)%></h2>
+  <div><%= link_to list_path(list),
+            method: :delete,
+            data: { confirm: "Are you sure?" } do %>
+            <i class="trash-icon fa-solid fa-trash"></i>
+            <% end %>
+  </div>
+</div>
+<% end %>
+<div class="list-card m-3" style='background-color: lightgrey'>
+<h2><%= link_to "Add a new list +", new_list_path %></h2>
+</div>
