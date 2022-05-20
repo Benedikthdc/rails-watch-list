@@ -1,4 +1,8 @@
-<div class="show-background" style="background-image: url(<%=@list.picture_url %>)">
+<% if @list.picture_url %>
+<div class="show-background" style="background-image: url(<%= @list.picture_url  %>)">
+<% else %>
+<div class="show-background" style="background-image: url(<%=cl_image_path @list.photo.key %>)">
+<% end %>
 <h1><%= @list.name %></h1>
 </div>
 

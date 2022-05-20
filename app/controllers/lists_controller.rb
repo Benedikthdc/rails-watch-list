@@ -1,5 +1,6 @@
 class ListsController < ApplicationController
   def index
+    @list = List.new
     if params[:query].present?
       @lists = List.where("name LIKE ?", "%#{params[:query]}%")
     else
@@ -17,10 +18,6 @@ class ListsController < ApplicationController
     redirect_to lists_path
   end
 
-  def new
-    @list = List.new
-  end
-
   def create
     @list = List.new(list_params)
     if @list.save
@@ -33,6 +30,6 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:name, :picture_url)
+    params.require(:list).permit(:name, :photo)
   end
 end

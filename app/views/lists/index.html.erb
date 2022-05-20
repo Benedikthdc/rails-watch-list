@@ -4,6 +4,25 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+               <%= simple_form_for @list do |f|%>
+        <%= f.input :name %>
+        <%= f.input :photo, as: :file %>
+        <%= f.submit "create list" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -11,7 +30,11 @@
 <h2 style="text-align: center; margin: 20px;">My lists</h2>
 <div class="cards d-flex" style="overflow-x: scroll">
 <% @lists.each do |list|  %>
-<div class="list-card m-3" style='background-image: url("<%=list.picture_url%>"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))'>
+<% if list.picture_url %>
+  <div class="list-card m-3 col-lg-3" style='background-image: url("<%=list.picture_url%>"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))'>
+<% else %>
+<div class="list-card m-3 col-lg-3" style='background-image: url("<%= cl_image_path list.photo.key%>"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))'>
+<% end %>
 <h2><%= link_to list.name, list_path(list)%></h2>
   <div><%= link_to list_path(list),
             method: :delete,
@@ -21,6 +44,7 @@
   </div>
 </div>
 <% end %>
-<div class="list-card m-3" style='background-color: lightgrey'>
-<h2><%= link_to "Add a new list +", new_list_path %></h2>
+
+<div class="list-card m-3 col-lg-3" style='background-color: lightgrey' type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<h2 style="color: white">Add a new List +</h2>
 </div>
